@@ -1,0 +1,53 @@
+1) Create IAM user and give the full acess to codecommit Services 
+  1.1) create credential 
+    -> go to security credential 
+    -> click on generate button on section  i.e - HTTPS Git credential for AWS CodeCommit
+    -> Download or copy the credentail 
+    
+2) open CodeCommit  , create new repositories  ie myFirstRepo
+3) Like Git,  there are two type of authentication available 1) HTTPS and 2) SSH
+  3.1 By https authentication
+    -> copied the link and ope ther gitbash or any terminal and use the following command 
+    -> git clone  [past the copied https path) 
+    -> now use th copied credential  here, that you got from 1.1 step 
+    -> Now cloning is successfully done 
+    -> now its same as git command , you can use the command like git add . , git  commit and git push further , git remote -v ,  git status  etc
+       For more detail please follow my git tutorial 
+    
+   3.2 By SSH authentication 
+     -> in developer machine open Git bash  then use the following commands 
+        cd .ssh  
+        ls 
+        you can see default ssh keys id_rsa = private, id_rsa.pub = for public        
+     ->Generate new key. The command is 
+          ssh-keygen -t rsa -b 2048 -C "aws-code-commit"
+          Enter the file in which to save the key : aws-code-commit
+        Then press enter to generate the key file
+      -> use the following command to see the files
+          ls 
+          aws-code-commit   aws-code-commit.pub
+          cat aws-code-commit.pub         
+        Now you just copy the content of  aws-code-commit-pub file
+      -> now go to to IAM in aws and the go to securty crential and then upload the ssh public key in [SSH keys for aws codeCommit] section
+      -> copy the ssh key ID 
+      -> return to your developer machine and open git bash . make sure you are in .ssh directory where you previously create  the aw-code-commit files 
+      -> create config file within .ssh folder enter the followin content within the config file 
+         Host git.codecommit.*.amazonaws.com
+           User FDFDFAFFD    <<means paste ssh key id here )
+           IdentityFile ~/.ssh/aws-code-commit
+      
+      -> now do a quick test by following command 
+        ssh git-codecommit.eu-west-2.amazonaws.com     <<for your case it may be different>>
+      -> follow the same step as 3.1 , but here , you need to give the path from ssh option
+      
+        
+        
+           
+           
+           
+      
+      
+      
+      
+    
+    
